@@ -30,7 +30,12 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $article = new Article;
+        $article->title = $request->title;
+        $article->body = $request->body;
+        if ($article->save()) {
+            return new ArticleResource($article);
+        }
     }
 
     /**
@@ -45,17 +50,6 @@ class ArticleController extends Controller
         $article = Article::findOrFail($id);
         // Return a single article as a resource
         return new ArticleResource($article);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -78,6 +72,11 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Get article
+        $article = Article::findOrFail($id);
+
+        if ($article->delete()) {
+            return new ArticleResource($article);
+        }
     }
 }
