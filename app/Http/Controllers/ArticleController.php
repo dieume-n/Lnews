@@ -61,7 +61,12 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $article = Article::findOrFail($id);
+        $article->title = $request->title ? $request->title : $article->title;
+        $article->body = $request->body ? $request->body : $article->body;
+        if ($article->save()) {
+            return new ArticleResource($article);
+        }
     }
 
     /**
