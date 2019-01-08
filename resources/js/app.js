@@ -14,6 +14,7 @@ window.Event = new Vue();
 Vue.component('articles-list', require('./components/ArticlesList.vue').default);
 
 Vue.component('new-article', require('./components/ArticleForm.vue').default);
+Vue.component('edit-article', require('./components/ArticleEditForm.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

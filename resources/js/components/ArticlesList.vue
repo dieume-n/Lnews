@@ -18,7 +18,7 @@
         <h3>{{ article.title.toUpperCase() }}</h3>
         <p>{{ article.body }}</p>
         <div>
-            <button type="button" class="btn btn-info text-light mb-2">Edit</button>
+            <button type="button" class="btn btn-info text-light mb-2 mr-2" data-toggle="modal" data-target="#editModal" @click="editArticle(article)">Edit</button>
         <button type="button" class="btn btn-danger mb-2" @click="deleteArticle(article.id)">Delete</button>
         </div>
         
@@ -48,6 +48,9 @@ export default {
     Event.$on('articleAdded', ()=> {
         this.fetchArticles();
     });
+    Event.$on('articleUpdated', ()=> {
+        this.fetchArticles();
+    });
   },
   methods: {
     fetchArticles(pageUrl) {
@@ -61,6 +64,9 @@ export default {
           vm.makePagination(response.meta, response.links);
         })
         .catch(errors => console.log(errors));
+    },
+    editArticle(article){
+        Event.$emit('editArticle', article);
     },
     makePagination(meta, links) {
       let pagination = {
