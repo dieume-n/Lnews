@@ -8,11 +8,6 @@ use App\Http\Resources\Article as ArticleResource;
 
 class ArticleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         // Get articles
@@ -23,12 +18,6 @@ class ArticleController extends Controller
         return ArticleResource::collection($articles);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $article = new Article;

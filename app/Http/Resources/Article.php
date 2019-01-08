@@ -21,7 +21,7 @@ class Article extends JsonResource
             'body' => $this->body
         ];
     }
-
+    
     public function with($request)
     {
         return [

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>Articles</h2>
     <nav aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item" :class="{ disabled: !pagination.prevPage }">
@@ -16,9 +15,15 @@
       </ul>
     </nav>
     <div class="card card-body mb-2" v-for="article in articles" :key="article.id">
-      <h3>{{ article.title.toUpperCase() }}</h3>
-      <p>{{ article.body }}</p>
+        <h3>{{ article.title.toUpperCase() }}</h3>
+        <p>{{ article.body }}</p>
+        <div>
+            <button type="button" class="btn btn-info text-light mb-2">Edit</button>
+        <button type="button" class="btn btn-danger mb-2" @click="deleteArticle(article.id)">Delete</button>
+        </div>
+        
     </div>
+    
     
   </div>
 </template>
@@ -40,6 +45,9 @@ export default {
   },
   created() {
     this.fetchArticles();
+    Event.$on('articleAdded', ()=> {
+        this.fetchArticles();
+    });
   },
   methods: {
     fetchArticles(pageUrl) {
@@ -63,6 +71,19 @@ export default {
       };
 
       this.pagination = pagination;
+    },
+    deleteArticle(id){
+        if(confirm('Are you sure?')){
+            fetch(`./api/article/${id}`, {
+                method: 'delete'
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Article Removed');
+                this.fetchArticles();
+            })
+        }
+        
     }
   }
 };
